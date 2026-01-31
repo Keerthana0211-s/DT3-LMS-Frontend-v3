@@ -1,34 +1,79 @@
+import Link from "next/link";
+import { redirect } from "next/navigation";
+import { ChevronLeft } from "lucide-react";
+import { assignments } from "@/data/assignments";
+import AssignmentStatusBadge from "@/components/learner/AssignmentStatusBadge";
 import AssignmentSubmission from "@/components/learner/AssignmentSubmission";
 import AIAssignmentFeedback from "@/components/learner/AIAssignmentFeedback";
+import AssignmentDetailContent from "@/components/learner/AssignmentDetailContent";
+import ProgressIntegrationCard from "@/components/learner/ProgressIntegrationCard";
 
-export default function AssignmentDetailPage() {
+type Props = {
+  params: Promise<{ id: string }>;
+};
+
+export default async function AssignmentDetailPage({ params }: Props) {
+  const { id } = await params;
+  const assignment = assignments.find((a) => a.id === id);
+
+  if (!assignment) {
+    return (
+      <div className="max-w-4xl">
+        <p className="text-slate-600">Assignment not found.</p>
+        <Link
+          href="/dashboard/learner/assignments"
+          className="text-teal-600 font-medium mt-4 inline-block"
+        >
+          ← Back to Assignments
+        </Link>
+      </div>
+    );
+  }
+
+  if (assignment.type === "Quiz") {
+    redirect(`/dashboard/learner/quiz/${id}`);
+  }
+
   return (
     <div className="space-y-8 max-w-4xl">
-      <h1 className="text-2xl font-semibold text-slate-800">
-        Build REST API for User Management
-      </h1>
+      <Link
+        href="/dashboard/learner/assignments"
+        className="inline-flex items-center gap-1 text-teal-600 font-medium hover:text-teal-700"
+      >
+        <ChevronLeft className="h-4 w-4" />
+        Back to Assignments
+      </Link>
 
-      <section className="bg-white border border-slate-200 text-slate-800  rounded-xl p-6">
-        <h3 className="section-title">Problem Description</h3>
-        <p>Create REST APIs to manage users with CRUD operations.</p>
-      </section>
+      <div className="flex flex-wrap items-start justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-semibold text-slate-800">
+            {assignment.title}
+          </h1>
+          <p className="text-slate-500 mt-1">
+            {assignment.course} • {assignment.module}
+          </p>
+          <div className="flex items-center gap-2 mt-2">
+            <AssignmentStatusBadge status={assignment.status} />
+            <span className="text-sm text-slate-600">
+              Role: {assignment.role} • Type: {assignment.type}
+            </span>
+          </div>
+        </div>
+        <div className="text-right text-sm text-slate-600">
+          <p className="font-medium text-slate-700">Due date</p>
+          <p>{assignment.dueDate}</p>
+          {assignment.latePenalty && (
+            <p className="text-slate-500 mt-1">Late penalty: {assignment.latePenalty}</p>
+          )}
+        </div>
+      </div>
 
-      <section className="bg-white border border-slate-200 text-slate-800  rounded-xl p-6">
-        <h3 className="section-title">Deliverables</h3>
-        <ul className="list-disc pl-5">
-          <li>GitHub repository</li>
-          <li>API documentation</li>
-        </ul>
-      </section>
+      <AssignmentDetailContent assignment={assignment} />
 
-      <section className="bg-white border border-slate-200 text-slate-800  rounded-xl p-6">
-        <h3 className="section-title">Submission Guidelines</h3>
-        <p>Deadline: 20 Sep 2024</p>
-        <p>Late penalty: -10%</p>
-      </section>
+      <ProgressIntegrationCard />
 
-      <AssignmentSubmission />
-      <AIAssignmentFeedback />
+      <AssignmentSubmission assignment={assignment} />
+      <AIAssignmentFeedback assignment={assignment} />
     </div>
   );
 }
