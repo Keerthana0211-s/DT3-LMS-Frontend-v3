@@ -3,40 +3,34 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { User } from "lucide-react";
 
 export default function Header() {
   const pathname = usePathname();
 
-  const isAuthPage = pathname.startsWith("/auth");
+  const isAuthPage = pathname === "/" || pathname.startsWith("/auth");
 
   return (
     <header className="bg-white border-b border-teal-100 sticky top-0 z-50">
       <div className="flex items-center justify-between h-16 px-6">
-        <Link href="/" className="flex items-center gap-3">
+        <Link href="/" className="flex items-center">
           <Image
-            src="/image.png"
+            src="/logo.png"
             alt="DigitalT3"
             width={40}
             height={40}
             className="h-10 w-auto"
           />
-          <span className="text-xl font-semibold text-teal-900 hidden sm:inline">
-            DigitalT3
-          </span>
         </Link>
 
         {!isAuthPage && (
-          <nav className="hidden md:flex items-center gap-8">
-            <Link href="/dashboard/learner" className="text-slate-700 hover:text-teal-600 transition">
-              Dashboard
-            </Link>
-            <Link href="/dashboard/learner/courses" className="text-slate-700 hover:text-teal-600 transition">
-              Courses
-            </Link>
-            <Link href="/dashboard/learner/progress" className="text-slate-700 hover:text-teal-600 transition">
-              Progress
-            </Link>
-          </nav>
+          <Link
+            href="/dashboard/learner/settings"
+            className="w-10 h-10 rounded-full bg-teal-100 flex items-center justify-center text-teal-700 hover:bg-teal-200 transition"
+            aria-label="Settings"
+          >
+            <User size={22} strokeWidth={1.5} />
+          </Link>
         )}
       </div>
     </header>

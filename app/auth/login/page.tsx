@@ -60,14 +60,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 px-4">
-      {/* Header at top */}
-      <div className="w-full flex items-center p-4">
-        <img src="/logo.png" alt="DigitalT3 Logo" className="h-10" />
-      </div>
-
-      {/* Login form container */}
-      <div className="flex-1 flex items-center justify-center">
+    <div className="min-h-screen flex items-center justify-center bg-slate-50 px-4">
         <div className="w-full max-w-md bg-white border border-slate-200 rounded-2xl p-8 shadow-sm relative">
           
           <h1 className="text-2xl font-semibold text-slate-900 mb-2 text-center">
@@ -141,7 +134,6 @@ export default function LoginPage() {
             </span>
           </p>
         </div>
-      </div>
     </div>
   );
 }

@@ -41,11 +41,7 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-50 px-4 relative">
-      <div className="absolute top-0 left-0 w-full p-4">
-        <img src="/logo.png" alt="DigitalT3 Logo" className="h-10" />
-      </div>
-
+    <div className="min-h-screen flex items-center justify-center bg-slate-50 px-4">
       <div className="w-full max-w-md bg-white border border-slate-200 rounded-2xl p-8 shadow-sm">
         <h1 className="text-3xl font-bold text-slate-900 text-center mb-2">
           DigitalT3 LMS

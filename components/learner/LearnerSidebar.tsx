@@ -9,7 +9,6 @@ const menuItems = [
   { label: "Progress", href: "/dashboard/learner/progress" },
   { label: "Assignments", href: "/dashboard/learner/assignments" },
   { label: "Certificates", href: "/dashboard/learner/certificates" },
-  { label: "Settings", href: "/dashboard/learner/settings" },
 ];
 
 export default function LearnerSidebar() {

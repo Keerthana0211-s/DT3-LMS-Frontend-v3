@@ -1,4 +1,5 @@
 import LearnerSidebar from "@/components/learner/LearnerSidebar";
+import { LearnerProgressProvider } from "@/context/LearnerProgressContext";
 
 export default function LearnerLayout({
   children,
@@ -6,10 +7,12 @@ export default function LearnerLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex min-h-screen">
-      <LearnerSidebar />
-      <main className="flex-1 p-8 bg-slate-50">{children}</main>
-    </div>
+    <LearnerProgressProvider>
+      <div className="flex min-h-screen">
+        <LearnerSidebar />
+        <main className="flex-1 p-8 bg-slate-50">{children}</main>
+      </div>
+    </LearnerProgressProvider>
   );
 }
 
